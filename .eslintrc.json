@@ -1,6 +1,12 @@
 {
   "extends": "@rocketseat/eslint-config/node",
   "rules": {
-    "no-useless-constructor": "off"
+    "no-useless-constructor": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-unused-vars": "warn",
+    "prettier/prettier": ["error", {
+      "singleQuote": false,
+      "semi": true
+    }]
   }
 }
