@@ -48,6 +48,34 @@ cp .env.test.example .env.test
 
 > As chaves JWT são lidas como **base64** (`Buffer.from(key, "base64")`). Não use o PEM puro.
 
+## Dados de exemplo (seed)
+
+Para popular o banco de desenvolvimento com dados de exemplo:
+
+```bash
+npm run db:seed
+```
+
+Cria 2 usuários (senha `123456`) e 3 perguntas, de forma idempotente:
+`john.doe@example.com` / `jane.doe@example.com`.
+
+## Levar os dados para outra máquina
+
+O repositório **não** contém os dados do banco (ficam no volume local do Postgres).
+Para transferir os dados reais de uma máquina para outra:
+
+```bash
+# Na máquina ORIGEM: exporta o banco para dumps/<nome>.sql
+npm run db:dump
+
+# Copie o arquivo gerado para a outra máquina e restaure
+npm run db:restore -- dumps/nome-do-arquivo.sql
+```
+
+O dump usa `--clean --if-exists`, então o restore sobrescreve o banco de destino
+(aplique as migrations antes, se necessário). Os dumps ficam em `dumps/`, que é
+ignorado pelo git.
+
 ## Testes
 
 - Unitários: `npm test`
@@ -66,6 +94,9 @@ docker compose exec postgres createdb -U postgres nest-clean-test
 | `npm run start:dev` | Sobe o servidor em modo watch |
 | `npm run build` | Compila para `dist/` |
 | `npm run setup` | Gera chaves RSA e cria `.env`/`.env.test` |
+| `npm run db:seed` | Popula o banco de dev com dados de exemplo |
+| `npm run db:dump` | Exporta o banco de dev para `dumps/` |
+| `npm run db:restore` | Restaura um dump (`-- dumps/arquivo.sql`) |
 | `npm run prisma:generate` | Gera o client Prisma em `generated/` |
 | `npm run prisma:migrate` | Aplica migrations (dev) |
 | `npm run prisma:deploy` | Aplica migrations (produção) |
