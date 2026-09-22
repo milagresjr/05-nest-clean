@@ -3,7 +3,7 @@ import { QuestionCommentsRepository } from "@/domain/forum/application/repositor
 import { QuestionComment } from "@/domain/forum/enterprise/entities/question-comment";
 import { Injectable } from "@nestjs/common";
 
-Injectable();
+@Injectable()
 export class PrismaQuestionsCommentRepository implements QuestionCommentsRepository {
   findById(id: string): Promise<QuestionComment | null> {
     throw new Error("Method not implemented.");

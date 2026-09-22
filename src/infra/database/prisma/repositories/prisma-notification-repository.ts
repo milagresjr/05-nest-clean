@@ -2,7 +2,7 @@ import { NotificationRepository } from "@/domain/notification/application/reposi
 import { Notification } from "@/domain/notification/enterprise/entities/notification";
 import { Injectable } from "@nestjs/common";
 
-Injectable();
+@Injectable()
 export class PrismaNotificationRepository implements NotificationRepository {
   findById(id: string): Promise<Notification | null> {
     throw new Error("Method not implemented.");

@@ -2,7 +2,7 @@ import { AnswerAttachmentRepository } from "@/domain/forum/application/repositor
 import { AnswerAttachment } from "@/domain/forum/enterprise/entities/answer-attachment";
 import { Injectable } from "@nestjs/common";
 
-Injectable();
+@Injectable()
 export class PrismaAnswerAttachmentsRepository implements AnswerAttachmentRepository {
   findManyByAnswerId(answerId: string): Promise<AnswerAttachment[]> {
     throw new Error("Method not implemented.");

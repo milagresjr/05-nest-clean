@@ -8,7 +8,7 @@ import { QuestionBestAnswerChosenEvent } from "../events/question-best-answer-ch
 
 export interface QuestionProps {
   authorId: UniqueEntityId;
-  bestAnswerId?: UniqueEntityId;
+  bestAnswerId?: UniqueEntityId | null;
   title: string;
   content: string;
   slug: Slug;
@@ -58,13 +58,14 @@ export class Question extends AggregateRoot<QuestionProps> {
     return this.content.substring(0, 120).trimEnd().concat("...");
   }
 
-  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
-    if (bestAnswerId === undefined) {
+  set bestAnswerId(bestAnswerId: UniqueEntityId | null | undefined) {
+    if (bestAnswerId === undefined || bestAnswerId === null) {
       return;
     }
 
     if (
       this.props.bestAnswerId === undefined ||
+      this.props.bestAnswerId === null ||
       !this.props.bestAnswerId.equals(bestAnswerId)
     ) {
       this.addDomainEvent(
@@ -72,7 +73,7 @@ export class Question extends AggregateRoot<QuestionProps> {
       );
     }
 
-    this.props.bestAnswerId = bestAnswerId!;
+    this.props.bestAnswerId = bestAnswerId;
     this.touch();
   }
 

@@ -1,9 +1,10 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
 import { Question } from "../../enterprise/entities/question.js";
-import type { QuestionRepository } from "../repositories/question-repository.js";
+import { QuestionRepository } from "../repositories/question-repository.js";
 import { right, type Either } from "@/core/either.js";
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment.js";
 import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list.js";
+import { Injectable } from "@nestjs/common";
 
 interface CreateQuestionUseCaseRequest {
   authorId: string;
@@ -19,6 +20,7 @@ type CreateQuestionUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 export class CreateQuestionUseCase {
   constructor(private questionRepository: QuestionRepository) {}
 
